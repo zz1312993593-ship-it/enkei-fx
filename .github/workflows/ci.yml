@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  frontend:
+    name: Frontend (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npx tsc --noEmit --incremental false
+      - run: npm run build
+      - run: npm test
+
+  python-terminal:
+    name: AI terminal tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install AI terminal dependencies
+        run: python -m pip install --upgrade pip && python -m pip install -r ai-terminal/requirements.txt
+      - name: Compile check
+        working-directory: ai-terminal
+        run: python -B -m compileall -q app
+      - name: Unit tests
+        working-directory: ai-terminal
+        run: python -B -m unittest discover -p "test_*.py" -v
+
+  python-decision:
+    name: Decision service tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install decision service dependencies
+        working-directory: decision-service
+        run: python -m pip install --upgrade pip && python -m pip install -r requirements-lock.txt && python -m pip install -e vendor/tradingagents
+      - name: Unit tests
+        working-directory: decision-service
+        run: python -B -m unittest test_delivery_review -v

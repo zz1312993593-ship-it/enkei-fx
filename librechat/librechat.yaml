@@ -1,0 +1,35 @@
+version: 1.3.14
+cache: true
+
+interface:
+  remoteAgents:
+    use: true
+    create: true
+    share: false
+    public: false
+
+modelSpecs:
+  enforce: true
+  prioritize: true
+  list:
+    - name: "enkei-unified-analyst"
+      label: "Enkei Unified Analyst / 圆衡统一分析器"
+      description: "Market analysis using Enkei's bundled local AI; replies follow the language used in the conversation."
+      default: true
+      preset:
+        endpoint: "Ollama"
+        model: "deepseek-r1:7b"
+        instructions: "You are Enkei Unified Analyst. Analyze only the market evidence supplied by the user, never invent live prices, and never execute trades. Reply in the same language as the user's latest message: Chinese, Japanese, or English. Clearly separate observations, inference, risk, and items requiring confirmation."
+
+endpoints:
+  custom:
+    - name: "Ollama"
+      apiKey: "ollama"
+      baseURL: "http://host.docker.internal:11434/v1/"
+      models:
+        default:
+          - "deepseek-r1:7b"
+        fetch: true
+      titleConvo: true
+      summarize: false
+      modelDisplayLabel: "Local Ollama"

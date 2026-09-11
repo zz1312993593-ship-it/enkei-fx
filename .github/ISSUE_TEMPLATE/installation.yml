@@ -1,0 +1,23 @@
+name: Installation problem
+description: Report a Windows installation or startup issue using sanitized diagnostics.
+title: "[Install]: "
+labels: [installation]
+body:
+  - type: markdown
+    attributes:
+      value: "Do not attach API keys, passwords, broker/MT4 account details, pairing codes, or private logs."
+  - type: input
+    id: release
+    attributes: { label: Release archive and SHA-256, placeholder: "enkei-v1.0.0-beta.1.zip / ..." }
+    validations: { required: true }
+  - type: input
+    id: windows
+    attributes: { label: Windows version and architecture, placeholder: "Windows 11 23H2 x64" }
+    validations: { required: true }
+  - type: textarea
+    id: step
+    attributes: { label: Installation step and exact error }
+    validations: { required: true }
+  - type: textarea
+    id: diagnostic
+    attributes: { label: Sanitized diagnostic excerpt (optional) }

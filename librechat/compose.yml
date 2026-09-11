@@ -1,0 +1,30 @@
+services:
+  api:
+    image: registry.librechat.ai/danny-avila/librechat-dev-api:latest
+    ports:
+      - "127.0.0.1:3080:3080"
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      HOST: 0.0.0.0
+      NODE_ENV: production
+      MONGO_URI: mongodb://mongodb:27017/LibreChat
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./librechat.yaml:/app/librechat.yaml:ro
+      - librechat-data:/app/data
+      - librechat-uploads:/app/uploads
+  mongodb:
+    image: mongo:8.0.20
+    restart: unless-stopped
+    volumes:
+      - librechat-mongodb:/data/db
+
+volumes:
+  librechat-data:
+  librechat-uploads:
+  librechat-mongodb:

@@ -1,0 +1,15 @@
+﻿# 圆衡 Enkei 决策服务已锁定依赖组合（来自开发机 ta-venv 实测通过，2026-09-04）
+# 用途：可分发包在干净机器安装时使用与开发环境一致的经验证组合。
+# 安装顺序：pip install -e ./vendor/tradingagents 后再安装本清单。
+# 注：vendored 上游的传递依赖由 `pip install -e ./vendor/tradingagents` 按
+# pyproject 自动解析；本清单锁定的只是服务/回测模块直接依赖的版本。
+
+fastapi===0.141.1
+uvicorn===0.52.4
+jsonschema===4.26.0
+httpx===0.28.1
+python-dotenv===1.2.3
+pandas===3.0.5
+matplotlib===3.11.1
+tabulate===0.10.0
+tiktoken===0.14.0

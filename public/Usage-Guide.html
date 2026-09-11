@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>圆衡 Enkei · 操作手册与演示说明（v1.6.1）</title>
+<style>
+  :root { --ink:#1f382c; --muted:#67756e; --line:#d8e3db; --bg:#fafbf9; --accent:#176846; --accent2:#1a7f5a; --warn-bg:#fff6ef; --warn-line:#e1c1ae; --err:#b04a32; }
+  * { box-sizing: border-box; }
+  body { margin:0; color:var(--ink); background:var(--bg); font-family:"Inter","Microsoft YaHei UI","Noto Sans CJK SC","Yu Gothic UI",Arial,sans-serif; line-height:1.7; }
+  header { padding:34px 28px 26px; background:linear-gradient(135deg,#12452f,#1a7f5a); color:#fff; }
+  header h1 { margin:0 0 8px; font-size:26px; }
+  header p { margin:0; opacity:.92; }
+  nav.toc { position:sticky; top:0; z-index:5; display:flex; flex-wrap:wrap; gap:6px; padding:10px 28px; background:rgba(250,251,249,.96); border-bottom:1px solid var(--line); font-size:13px; }
+  nav.toc a { color:var(--accent); text-decoration:none; font-weight:750; padding:3px 10px; border:1px solid var(--line); border-radius:99px; background:#fff; }
+  nav.toc a:hover { background:#eef7f1; }
+  main { max-width:980px; margin:0 auto; padding:10px 28px 60px; }
+  section { margin-top:34px; }
+  h2 { padding-bottom:8px; border-bottom:2px solid var(--line); letter-spacing:.4px; }
+  h3 { margin-top:22px; color:#15583e; }
+  table { width:100%; border-collapse:collapse; margin:12px 0; font-size:14px; background:#fff; }
+  th,td { padding:9px 12px; border:1px solid var(--line); text-align:left; vertical-align:top; }
+  th { background:#f0f6f2; color:#15583e; font-weight:800; white-space:nowrap; }
+  code { padding:1px 6px; border-radius:5px; background:#eef1ec; font-family:"Cascadia Code","Consolas",monospace; font-size:12.5px; color:#15583e; }
+  .tip { padding:12px 15px; border:1px solid #b4d0bd; border-left:4px solid #2f9e6e; background:#eef7f1; border-radius:8px; font-size:14px; }
+  .warn { padding:12px 15px; border:1px solid var(--warn-line); border-left:4px solid #c67a4b; background:var(--warn-bg); border-radius:8px; font-size:14px; }
+  .step { counter-reset:step; }
+  .step li { position:relative; margin:10px 0; padding-left:38px; list-style:none; }
+  .step li:before { counter-increment:step; content:counter(step); position:absolute; left:0; top:2px; width:26px; height:26px; border-radius:50%; background:var(--accent); color:#fff; font-weight:800; font-size:13px; text-align:center; line-height:26px; }
+  .kbd { padding:1px 7px; border:1px solid #c3cfc7; border-bottom-width:2px; border-radius:5px; background:#fff; font-size:12px; font-weight:750; }
+  footer { margin-top:48px; padding:18px 28px; color:var(--muted); font-size:12px; border-top:1px solid var(--line); text-align:center; }
+  @media (max-width:720px){ nav.toc a{ font-size:12px; } table{ font-size:13px; } main{ padding:6px 16px 50px; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>圆衡 Enkei · 操作手册与演示说明</h1>
+  <p>版本 v1.6.1（覆盖 AI 终端、Demo 演练、模型路由与常见故障）｜ 语言：中文 ／ 日本語 ／ English（界面右上角可切换）</p>
+</header>
+
+<nav class="toc">
+  <a href="#env">1 环境要求</a>
+  <a href="#start">2 首次启动</a>
+  <a href="#pages">3 五个页面怎么用</a>
+  <a href="#ai-terminal">4 AI 终端配置</a>
+  <a href="#model-route">5 模型与路由</a>
+  <a href="#news">6 新闻模块</a>
+  <a href="#demo">7 Demo 演练（做多 / 做空）</a>
+  <a href="#errors">8 错误码与故障处理</a>
+  <a href="#recover">9 如何恢复与收集日志</a>
+  <a href="#faq">10 常见问题</a>
+</nav>
+
+<main>
+
+<section id="env">
+<h2>1 环境要求</h2>
+<table>
+  <tr><th>项目</th><th>要求</th></tr>
+  <tr><td>操作系统</td><td>Windows 10 / 11（64 位）</td></tr>
+  <tr><td>Node.js</td><td>18 或更高（启动脚本自动探测 PATH / 标准安装位置）</td></tr>
+  <tr><td>Python</td><td>3.10+（仅 AI 终端使用；主面板不需要）</td></tr>
+  <tr><td>浏览器</td><td>任意现代浏览器（Chrome / Edge 均可）</td></tr>
+  <tr><td>网络</td><td>首次启动需联网安装依赖；新闻 / 云端 AI（如智谱）需联网；主面板可离线演示</td></tr>
+</table>
+</section>
+
+<section id="start">
+<h2>2 首次启动</h2>
+<ol class="step">
+  <li>将项目文件夹完整复制到本机任意位置（建议路径不含中文或空格，如 <code>D:\Enkei</code>）。</li>
+  <li>双击 <code>Start-Enkei.cmd</code>。脚本自动完成：环境探测 → 依赖准备（首次联网拉取，可能数分钟）→ 启动自检 → 拉起面板。</li>
+  <li>看到「总览」页即启动成功。左侧导航共五个入口：总览 / AI 分析 / Demo / 模型 / 设置。</li>
+</ol>
+<div class="tip">首次启动编译浏览器包可能需要 45 秒以上，属正常现象，请勿强制关闭窗口。</div>
+</section>
+
+<section id="pages">
+<h2>3 五个页面怎么用</h2>
+<table>
+  <tr><th>页面</th><th>作用</th><th>要点</th></tr>
+  <tr><td><b>总览</b></td><td>健康检查 / 本机服务 / 操作面板</td><td>先看「启动自检」通过；行情桥、历史时钟、后台研究合格后才进 Demo。「在新页面打开完整说明书」就是这个页面右上角按钮。</td></tr>
+  <tr><td><b>AI 分析</b></td><td>M5 / M15 时间段的研究与政策生成</td><td>由 AI 终端统一分析体生成「多 / 空 / 观望」判断与理由，人类只做配置与复盘，无人工买卖入口。</td></tr>
+  <tr><td><b>Demo</b></td><td>本地确定性行情 + 自动执行演练</td><td>支持做多与做空；需先启动服务 → 验证连接 → 解除急停 → 输入配对码授权。</td></tr>
+  <tr><td><b>模型</b></td><td>模型目录与路由配置（AI 终端内一并管理）</td><td>展示已在 LibreChat / 智谱 / 本机 Ollama 验证的模型，可一键设为当前路由，不保存也不显示任何密钥。</td></tr>
+  <tr><td><b>设置</b></td><td>风险参数、语言、时间区、AI 终端启停</td><td>风险设置保存有防抖；「一键关闭 AI 终端」会等待进程真正退出，最多 15 秒，不会误报失败。</td></tr>
+</table>
+</section>
+
+<section id="ai-terminal">
+<h2>4 AI 终端配置</h2>
+<p>AI 终端是独立服务（默认 <code>http://127.0.0.1:8710</code>），在「设置 → AI 终端」里统一管理。</p>
+<h3>4.1 启动与停止</h3>
+<ul>
+  <li><b>启动 AI 终端</b>：填写或确认终端地址后点「启动」，等待就绪。启动后状态行显示运行中，并轮询健康状态。</li>
+  <li><b>一键关闭</b>：点「停止」后进入「正在停止…」状态，前端会持续轮询 <code>/health</code> 直至进程退出（最多 15 秒）。若进程正常结束才会显示「已停止」；超时才提示取消失败——不会像旧版本那样刚点完就误报。</li>
+</ul>
+<h3>4.2 连通性测试与进度</h3>
+<ul>
+  <li>点「测试网关连通性」会先快速探测本地服务，再调用云端接口验证。</li>
+  <li>测试期间显示<b>百分比进度条</b>（探测阶段封顶 85%，接口回调完成后跳到 100%），不会再出现“长时间无响应、像卡死”的情况。本地模型首次加载可能需要更久，属正常。</li>
+</ul>
+<h3>4.3 当前使用的模型</h3>
+<p>状态网格会显示「当前使用的模型」与「当前路由」两块卡片：例如 <code>zhipu / glm-4.5-air</code>、<code>本地备用 llama3.2:3b</code> 等，明确告诉你 AI 判断到底由哪个模型给出。</p>
+<h3>4.4 AI 判断展示</h3>
+<p>M5 / M15 提交后，「最新 AI 判断」区块会展示：多空方向（做多 / 做空 / 观望）、置信度、触发价与止损参考、判断理由、以及<b>做出该判断所用的模型</b>。AI 的建议全程可见，避免“只看到结果、看不到依据”的质疑。</p>
+</section>
+
+<section id="model-route">
+<h2>5 模型与路由</h2>
+<h3>5.1 三层模型来源</h3>
+<table>
+  <tr><th>来源</th><th>说明</th></tr>
+  <tr><td>LibreChat</td><td>统一 AI 网关与模型管理，管理 API Key；圆衡只读取已配置的 Agent，不保存供应商密钥。</td></tr>
+  <tr><td>云端直连（如智谱）</td><td>主路由：调用固定 <code>temperature=0.2</code>、<code>max_tokens=384</code>，适合短结构化政策判断。</td></tr>
+  <tr><td>本机 Ollama</td><td>仅作离线备用（应急兜底），云端不可达时自动启用，避免阻塞。</td></tr>
+</table>
+<h3>5.2 选择 / 调用模型</h3>
+<ol class="step">
+  <li>「设置 → AI 终端 → 模型目录」列出所有已验证条目，标注 可用 / 未配置、价格档位、算力档位、推荐时间段。</li>
+  <li>每个<b>可用</b>条目带一个按钮：云端条目为「设为当前路由」，本地条目为「设为本地备用」。</li>
+  <li>点击后立即 PUT 保存并热生效，当前生效条目显示「当前路由 / 已生效」徽标。无需手抄模型 ID，也不用另开页面找领导要配置。</li>
+  <li>访问 Token 输入框已加随机名属性，浏览器不再弹出“是否保存此密码？”提示。</li>
+</ol>
+<h3>5.3 统一分析体</h3>
+<p>勾选「使用一个统一分析体处理 M5 与 M15」后，两个时间框共用同一 Agent，输出同一套 JSON 判断契约；时间框只决定输入提示中的职责与政策有效期。切换不同 AI 时不再出现“各自独立、上下文互不相通”的情况——统一分析体由 LibreChat 侧做会话调配。</p>
+</section>
+
+<section id="news">
+<h2>6 新闻模块</h2>
+<ul>
+  <li>新闻区展示「市场简报」（本地规则摘要，明确标注非 AI 生成）、来源状态、最近条目。</li>
+  <li>点「刷新」重新抓取；单个源失败只标红该源状态，不影响其它源与行情 / AI 分析。</li>
+  <li>外网不可达时：来源状态显示失败原因，缓存过期时保留上次缓存并提示，不会误报“已刷新成功”。</li>
+  <li>「手动注入」可补充专属消息（外网不可达时的替代手段）。</li>
+  <li>源列表可在「设置 → AI 终端 → 新闻源」中替换（最多 12 个），非法项自动过滤，清空回退默认。</li>
+</ul>
+</section>
+
+<section id="demo">
+<h2>7 Demo 演练（做多 / 做空）</h2>
+<h3>7.1 开通流程</h3>
+<ol class="step">
+  <li>进入 <b>Demo</b> 页，展开「启动 Demo 确认服务」并点击「启动」；控制中心确认服务显示「在线」后才具备执行能力。</li>
+  <li>「验证连接」跑通后解除急停（退出紧急状态）。</li>
+  <li>输入四段式<b>配对码</b>完成授权（由本机执行桥一次性生成，输入框已关闭浏览器“保存密码”弹窗）。</li>
+  <li>设置模型与做多 / 做空仓位参数并<b>启用</b>，自动执行即接管。</li>
+</ol>
+<h3>7.2 做多与做空</h3>
+<ul>
+  <li>AI 判断为「做多」时走多头仓位流程；判断为「做空」时走空头仓位流程（缺口已补上，不再只有做多布局）。</li>
+  <li>多空信号、入场 / 止损 / 目标价、每次仓位大小都在面板上展示。</li>
+  <li>非人工断线会自动尝试恢复；<b>人工急停绝不会自动解除</b>，必须人工确认。</li>
+</ul>
+<h3>7.3 本机执行服务</h3>
+<p>若显示「本机执行服务暂不可达 / 自动恢复中」，请先在「总览 → 启动 Demo 确认服务」启动，确认状态为在线后再进 Demo；如持续自动恢复失败，见错误码 E302 与第 8、9 节。</p>
+</section>
+
+<section id="errors">
+<h2>8 错误码与故障处理</h2>
+<table>
+  <tr><th>代码</th><th>含义</th><th>处理</th></tr>
+  <tr><td>E110</td><td>本地组件准备中</td><td>等待启动自检完成，不要强制关闭窗口。</td></tr>
+  <tr><td>E111</td><td>组件安装失败</td><td>联网后重新运行 <code>Start-Enkei.cmd</code> 自动补装。</td></tr>
+  <tr><td>E121</td><td>启动自检不通过</td><td>看启动诊断日志定位缺失项，修复后重跑。</td></tr>
+  <tr><td>E124</td><td>只读后台服务守护失败</td><td>检查端口占用与日志（见第 9 节）。</td></tr>
+  <tr><td>E140</td><td>面板未在时限内就绪</td><td>首次编译较慢时属正常；超久未就绪则重启面板。</td></tr>
+  <tr><td>E201</td><td>行情桥不可用</td><td>行情桥未启动 / 端口被占；按第 9 节收集日志。</td></tr>
+  <tr><td>E301</td><td>Demo 配对未验证</td><td>输入正确配对码并完成授权。</td></tr>
+  <tr><td>E302</td><td>Demo 连接自动恢复中</td><td>等待自动重连；持续失败则重启 Demo 确认服务。</td></tr>
+</table>
+<div class="warn">上述任何异常都不影响浏览与本地研究；只有 Demo 自动执行与云端 AI 判断受影响。</div>
+</section>
+
+<section id="recover">
+<h2>9 如何恢复与收集日志</h2>
+<h3>9.1 恢复</h3>
+<ul>
+  <li><b>面板异常</b>：关闭所有 Enkei 窗口，重新双击 <code>Start-Enkei.cmd</code>。</li>
+  <li><b>缓存 / 状态异常</b>：删除项目根的 <code>.enkei-runtime.json</code> 与 <code>enkei-*.log</code> 后重启（会重新自检）。</li>
+  <li><b>AI 终端数据</b>：删除 <code>ai-terminal/data/</code> 下对应缓存（如 <code>news/cache.json</code>）后重启终端。</li>
+  <li><b>干净基线</b>：保留 <code>Start-Enkei.cmd</code>、<code>launcher/</code>、<code>app/</code>、<code>lib/</code>、<code>ai-terminal/</code>，其余生成物（<code>.next/</code>、<code>node_modules/</code>、<code>.vinext/</code>、日志）可安全删除后重新一键启动。</li>
+  <li><b>重要</b>：<code>私有配置/</code>（含本机 API 配置与模型文件）不属于开源包，恢复时请勿删除或外发。</li>
+</ul>
+<h3>9.2 日志位置（均在项目根目录）</h3>
+<table>
+  <tr><th>文件</th><th>内容</th></tr>
+  <tr><td><code>enkei-startup-diagnostic.log</code></td><td>启动自检与错误码（每次启动覆盖）</td></tr>
+  <tr><td><code>enkei-panel-runtime.log</code></td><td>面板运行时日志</td></tr>
+  <tr><td><code>enkei-ai-terminal-runtime.log</code></td><td>AI 终端运行时日志</td></tr>
+  <tr><td><code>ai-terminal/temp_terminal_out.log</code> / <code>temp_terminal_err.log</code></td><td>AI 终端独立输出</td></tr>
+</table>
+<p>排查故障时请将上述文件一并打包提供；日志中不会包含任何 API 密钥。</p>
+</section>
+
+<section id="faq">
+<h2>10 常见问题</h2>
+<table>
+  <tr><th>问题</th><th>回答</th></tr>
+  <tr><td>主面板可以下单吗？</td><td>不能。主面板只读，不含任何真实下单接口；只有 Demo 本地演练。</td></tr>
+  <tr><td>为什么 AI 测试那么久？</td><td>云端调用受 max_tokens 限制已较快；本地 Ollama 首次加载模型可能几分钟。现在有进度条，可看到进行到哪一步。</td></tr>
+  <tr><td>为什么切页面会弹“用户名和密码”？</td><td>旧版本输入框触发了浏览器保存密码提示，已改用随机表单名并关闭自动提示，不再弹出。</td></tr>
+  <tr><td>新闻刷新显示失败怎么办？</td><td>确认外网可达后重试；单源失败只会标红该源。也可手动注入或用替换源。</td></tr>
+  <tr><td>我不知道现在用的是哪个模型？</td><td>AI 终端状态网格的「当前使用的模型」卡片直接显示；AI 判断区块也会标注所用模型。</td></tr>
+  <tr><td>Demo 无法自动交易？</td><td>确认「总览 → 启动 Demo 确认服务」已启动且状态为在线，完成配对授权并解除急停。</td></tr>
+  <tr><td>如何更换云端 / 本地模型？</td><td>「设置 → AI 终端 → 模型目录」选中可用条目点「设为当前路由 / 设为本地备用」即热生效。</td></tr>
+</table>
+</section>
+
+</main>
+<footer>圆衡 Enkei · 操作手册 ｜ 生成时间 2026-09-02 ｜ 本页为运行期内置说明，不包含任何密钥或私有配置</footer>
+</body>
+</html>

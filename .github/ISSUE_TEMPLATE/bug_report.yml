@@ -1,0 +1,23 @@
+name: Bug report
+description: Report a reproducible product issue without credentials or account data.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "Never include API keys, passwords, broker/MT4 account details, pairing codes, order IDs, or raw private logs."
+  - type: input
+    id: version
+    attributes: { label: Enkei version / commit, placeholder: "v1.0.0-beta.1" }
+    validations: { required: true }
+  - type: textarea
+    id: reproduce
+    attributes: { label: Steps to reproduce, placeholder: "1. ...\n2. ...\n3. ..." }
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes: { label: Expected and actual result }
+    validations: { required: true }
+  - type: textarea
+    id: safe_logs
+    attributes: { label: Sanitized diagnostics (optional), description: "Remove credentials and account/order data first." }

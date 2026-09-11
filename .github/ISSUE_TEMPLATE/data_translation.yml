@@ -1,0 +1,17 @@
+name: Data or translation feedback
+description: Report a data-status, market-label, or translation issue.
+title: "[Data/Translation]: "
+labels: [data, translation]
+body:
+  - type: input
+    id: version
+    attributes: { label: Enkei version / commit }
+    validations: { required: true }
+  - type: dropdown
+    id: category
+    attributes: { label: Category, options: [Market data status, Historical data, Chinese UI, Japanese UI, English UI] }
+    validations: { required: true }
+  - type: textarea
+    id: detail
+    attributes: { label: What should change, description: "Do not include credentials, account data or private order details." }
+    validations: { required: true }

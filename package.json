@@ -1,0 +1,48 @@
+{
+  "name": "enkei-fx-quant",
+  "version": "1.0.0-beta.1",
+  "private": true,
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "vinext dev",
+    "bridge": "node bridge/server.mjs",
+    "supervisor": "node bridge/research-supervisor.mjs",
+    "demo-gate": "node bridge/demo-execution-gate.mjs",
+    "build": "vinext build",
+    "start": "vinext start",
+    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
+    "test": "node --test tests/bridge-history.test.mjs tests/csv-history.test.mjs tests/backtest-mc.test.mjs tests/strategies.test.mjs tests/trade-management.test.mjs tests/position-management.test.mjs tests/librechat-runtime.test.mjs tests/runtime-safety-controls.test.mjs",
+    "e2e": "playwright test",
+    "pretest": "npx tsc lib/csv-history.ts lib/backtest.ts lib/research-signal.ts lib/position-management.ts --outDir tests/.build --target es2020 --module esnext --skipLibCheck",
+    "ci": "node scripts/ci.mjs"
+  },
+  "dependencies": {
+    "lightweight-charts": "^5.2.0",
+    "next": "16.3.3",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "1.54.0",
+    "@cloudflare/workers-types": "5.20260826.1",
+    "@openai/sites-vite-plugin": "^0.1.0 || ^0.2.0",
+    "@playwright/test": "^1.63.0",
+    "@tailwindcss/postcss": "4.2.1",
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.2",
+    "@vitejs/plugin-rsc": "0.5.34",
+    "eslint": "9.39.4",
+    "eslint-config-next": "16.2.6",
+    "react-server-dom-webpack": "19.2.8",
+    "tailwindcss": "4.2.1",
+    "typescript": "5.9.3",
+    "vinext": "1.0.0-beta.8",
+    "vite": "8.2.2",
+    "wrangler": "4.126.0"
+  },
+  "type": "module"
+}

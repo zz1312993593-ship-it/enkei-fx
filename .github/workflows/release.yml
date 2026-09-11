@@ -1,0 +1,32 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    name: Package Windows release
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx tsc --noEmit --incremental false
+      - run: npm test
+      - run: npm run build
+      - name: Build distributable zip
+        shell: pwsh
+        run: ./installer/Pack-Enkei.ps1 -Root $env:GITHUB_WORKSPACE
+      - name: Attach zip to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ../release/enkei-*.zip
+          generate_release_notes: true

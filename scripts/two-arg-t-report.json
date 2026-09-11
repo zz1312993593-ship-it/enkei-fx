@@ -1,0 +1,16 @@
+{
+  "results": {},
+  "skipped": {
+    "ai-terminal-console.tsx": 9,
+    "backtest-panel.tsx": 8,
+    "data-health-panel.tsx": 3,
+    "demo-automation-panel.tsx": 8,
+    "demo-execution-panel.tsx": 4,
+    "forward-validation.tsx": 1,
+    "live-trading-panel.tsx": 3,
+    "market-research.tsx": 2,
+    "operations-panel.tsx": 2,
+    "paper-panel.tsx": 1,
+    "strategy-tournament.tsx": 2
+  }
+}

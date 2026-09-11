@@ -1,0 +1,85 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/.vinext/
+/out/
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# local environment
+.env*
+
+# deployment and generated files
+.vercel
+next-env.d.ts
+/dist/
+/.wrangler/
+/outputs/
+/work/
+
+# Enkei local runtime state (never ship a user's machine state)
+/.enkei-runtime.json
+/.enkei-setup/
+/enkei-*.log
+/enkei-*.log*
+/temp_*.log
+/ai-terminal/.venv/
+/ai-terminal/data/
+/ai-terminal/logs/
+/ai-terminal/temp_terminal_err.log
+/ai-terminal/temp_terminal_out.log
+/decision-service/.venv/
+/decision-service/data/
+/decision-service/research/output/
+*.sqlite
+*.jsonl
+*.ex4
+*.compile.log
+*.tsbuildinfo
+__pycache__/
+*.py[cod]
+/tests/.build/
+.e2e/
+/docs/CI_最近运行结果.json
+/docs/依赖与许可证清单.json
+/docs/internal/
+/docs/work-reports/
+/docs/CCOGE_*.md
+/docs/Codex_*.md
+/docs/LibreChat_*.md
+/docs/article_*.md
+/docs/assess_*.json
+/docs/*工作清单*.md
+/docs/*问题台账*.md
+/docs/*交付*.md
+/docs/*交接*.md
+/docs/*验证日志*.md
+
+# tool session state (never commit)
+.mimosa/
+/.openai/
+
+# playwright
+/test-results/
+/playwright-report/
+/public/runtime-self-check.json
